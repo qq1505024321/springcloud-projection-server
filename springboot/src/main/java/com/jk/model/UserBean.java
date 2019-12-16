@@ -9,7 +9,7 @@ public class UserBean implements Serializable {
 
     private String  username;
 
-    private String  password;
+    private String  userpwd;
 
     public Integer getUserid() {
         return userid;
@@ -27,12 +27,12 @@ public class UserBean implements Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserpwd() {
+        return userpwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserpwd(String userpwd) {
+        this.userpwd = userpwd;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserBean implements Serializable {
         return "UserBean{" +
                 "userid=" + userid +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + userpwd + '\'' +
                 '}';
     }
 }

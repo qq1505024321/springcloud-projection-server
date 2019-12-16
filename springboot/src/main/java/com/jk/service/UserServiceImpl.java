@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     public UserBean queryUserByUsernamePassword(UserBean user) {
 
         String username = user.getUsername();
-        String password = user.getPassword();
-        return userMapper.queryUserByUsernamePassword(username,password);
+        String userpwd = user.getUserpwd();
+        return userMapper.queryUserByUsernamePassword(username,userpwd);
     }
 }

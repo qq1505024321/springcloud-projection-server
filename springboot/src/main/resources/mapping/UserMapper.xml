@@ -2,6 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.mapper.UserMapper" >
     <select id="queryUserByUsernamePassword" resultType="com.jk.model.UserBean">
-        select * from t_user where username=#{username} and password=#{password}
+        select * from t_user where username=#{username} and userpwd=#{userpwd}
     </select>
 </mapper>

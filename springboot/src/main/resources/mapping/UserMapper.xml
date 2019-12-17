@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.mapper.UserMapper" >
+    
+    <!--登录-->
     <select id="queryUserByUsernamePassword" resultType="com.jk.model.UserBean">
         select * from t_user where username=#{username} and userpwd=#{userpwd}
     </select>
+    
+    <!--条件查询-->
+    <sql id="searchSQL">
+        <where>
+            <if test="u.username != null and u.username != '' ">
+                and username like '%${u.username}%'
+            </if>
+            <if test="u.starttime != null and u.starttime != '' ">
+                and usertime &gt; #{u.starttime}
+            </if>
+
+            <if test="u.endtime != null and u.endtime != '' ">
+                and usertimr &lt; #{u.endtime}
+            </if>
+
+
+        </where>
+    </sql>
+    
+    <!--查询所以用户-->
+    <select id="queryUserList" resultType="com.jk.model.UserBean">
+        select * from t_user <include refid="searchSQL"></include> limit #{start},#{limit}
+    </select>
+    
+    <!--查询总条数-->
+    <select id="queryUserCount" resultType="Long">
+        select count(*) from  t_user <include refid="searchSQL"></include>
+    </select>
+
+    <!--删除-->
+    <delete id="deleteUserById">
+        delete from t_user where userid = #{userid}
+    </delete>
 </mapper>

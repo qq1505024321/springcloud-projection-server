@@ -1,6 +1,7 @@
 package com.jk.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserBean implements Serializable {
 
@@ -10,6 +11,36 @@ public class UserBean implements Serializable {
     private String  username;
 
     private String  userpwd;
+
+    private String starttime;
+
+    private String endtime;
+
+    private Date usertime;
+
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
+    public Date getUsertime() {
+        return usertime;
+    }
+
+    public void setUsertime(Date usertime) {
+        this.usertime = usertime;
+    }
 
     public Integer getUserid() {
         return userid;
@@ -27,6 +58,8 @@ public class UserBean implements Serializable {
         this.username = username;
     }
 
+
+
     public String getUserpwd() {
         return userpwd;
     }
@@ -40,7 +73,10 @@ public class UserBean implements Serializable {
         return "UserBean{" +
                 "userid=" + userid +
                 ", username='" + username + '\'' +
-                ", password='" + userpwd + '\'' +
+                ", userpwd='" + userpwd + '\'' +
+                ", starttime='" + starttime + '\'' +
+                ", endtime='" + endtime + '\'' +
+                ", usertime=" + usertime +
                 '}';
     }
 }

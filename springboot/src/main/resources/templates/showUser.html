@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入layui的js、css-->
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+    <script src="../layui/layui.all.js"></script>
+    <!--引入jquery-->
+    <script src="../layui/jquery.min.js"></script>
+    <!--引入vue-->
+    <script src="../vue/vue.js"></script>
+</head>
+
+
+<body>
+
+<!--用户详细信息展示-->
+<div class="site-text" style="margin: 5%; display: none" id="user-info">
+<form class="layui-form" action="" lay-filter="example">
+    <h3><b>用户编号：</b><span name="userid"></span></h3><br>
+
+    <h3><b>用户昵称：</b><span name="username"></span></h3><br>
+
+    <h3><b>用户真实姓名：</b><span name="truename"></span></h3><br>
+
+    <h3><b>用户身份证号码：</b><span name="idcarid"></span></h3><br>
+
+    <h3><b> 联系方式：</b><span name="phone"></span></h3><br>
+
+    <h3><b>积分：</b><span name="num"></span></h3><br>
+
+    <h3><b>信誉分：</b><span name="integral"></span></h3><br>
+
+    <h3><b>性别：</b><span name="sex"></span></h3><br>
+
+    <h3><b>生日：</b><span name="bir"></span></h3><br>
+
+    <h3><b>血型：</b><span name="bloodtype"></span></h3><br>
+
+    <h3><b>教育：</b><span name="education"></span></h3><br>
+
+    <h3><b>工作：</b><span name="work"></span></h3><br>
+
+    <h3><b>注册时间：</b><span name="usertime"></span></h3><br>
+
+    <h3><b>家庭住址</b><span name="address"></span></h3><br>
+</form>
+</div>
+<!--用户信息展示-->
+<div>
+        <!--//用户名称模糊查询框-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名称</label>
+            <div class="layui-input-block">
+                <input type="text" id="username" name="username"   lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input" style="width: 150px">
+            </div>
+        </div>
+        <!--//时间区间搜索框-->
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">注册时间</label>
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input type="text" id="starttime" name="starttime" placeholder="YYYY-MM-DD" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input type="text" id="endtime" name="endtime" placeholder="YYYY-MM-DD" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+    <div style="width: 216px; margin: 0;">
+        <button type="button" id="search-button" class="layui-btn layui-btn-fluid" data-type="reload"><i class="layui-icon layui-icon-search"></i>查询</button>
+    </div>
+
+    <table id="show-user-table"></table>
+</div>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#show-user-table',
+            id:'reloadShow',
+            url: '../queryUserList', //数据接口
+            page: true,//开启分页,
+            cols: [
+                [ //表头
+                {field: 'userid', title: '用户编号',sort: true},
+                {field: 'username', title: '用户名称'},
+                {field: 'phone', title: '联系方式'},
+                {field:'usertime',title:'注册时间'},
+                {field:'caozuo',title:'操作',
+                    templet:function (rows) {
+                        return "<button type='button' class='layui-btn layui-btn-sm' onclick='findUserById("+rows.userid+")'><i class=\"layui-icon layui-icon-search\"></i></button>     <button type='button' class='layui-btn layui-btn-primary layui-btn-sm' onclick='deleteUserById("+rows.userid+")'>\n" +
+                            "    <i class='layui-icon'>&#xe640;</i>";
+                    }
+                 }
+            ]
+            ]
+        });
+
+    });
+
+    //删除
+     function deleteUserById(userid){
+
+        var $ = layui.jquery
+         $.ajax({
+             url:'../deleteUserById',
+             data:{userid:userid},
+             method:'post',
+             success:function (msg) {
+                if (msg == 1){
+                    layer.msg('删除成功。。。', {icon: 1});
+                    $(".layui-laypage-btn").click()
+                } else {
+                    layer.msg('删除失败。。。', {icon: 2});
+                }
+
+             },
+             error: function () {
+                 layer.msg('网络异常。。。', {icon: 33});
+             }
+         })
+    }
+
+
+    /*时间插件*/
+    layui.use(['form','laydate'],function () {
+        laydate = layui.laydate,
+            laydate.render({
+                elem:'#starttime'
+            })
+            laydate.render({
+                elem:'#endtime'
+            })
+    })
+
+
+
+
+
+    var $ = layui.$, active = {
+        //注释：layui 搜索模块 Start
+        reload: function () {
+            var usernamepage = $('#username').val();
+            var starttime = $('#starttime').val();
+            var endtime = $('#endtime').val();
+            table.reload('reloadShow', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    username: usernamepage,
+                    starttime: starttime,
+                    endtime: endtime
+                },
+                method: 'post',
+                url:'../queryUserList',
+
+            });
+        }
+    }
+
+    $('#search-button').on('click', function(){   //  点击搜索
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+
+    function findUserById(userid) {
+        var $ = layui.jquery;
+        $.ajax({
+            url:'../findUserById',
+            data:{userid:userid},
+            method:'post',
+            success:function (data) {
+                alert(data)
+                layer.open({
+                    title: '用户详细信息',
+                    closeBtn:2,
+                    type: 1,
+                    area: ['30%', '70%'],
+                    content: $("#user-info").html(),
+                    success: function () {
+                        laydate.render({
+                            /*// elem:"#date2"*/
+                        })
+                        form.val('example', {
+                            "userid": data.userid,
+                            "idcarid": data.idcarid,
+                            "email": data.email,
+                            "truename": data.truename,
+                            "sex": data.sex,
+                            "bir": data.bir,
+                            "address": data.address,
+                            "bloodtype": data.bloodtype,
+                            "education": data.education,
+                            "work": data.work,
+                            "num": data.num,
+                            "phone": data.phone,
+                            "nametime": data.nametime,
+                            "integral": data.integral
+                        })
+
+                    },
+
+                    end: function () {
+                        layer.closeAll()
+                    },
+
+                    })
+
+
+                layer.close()
+
+            }
+
+
+
+
+        })
+
+
+
+    }
+
+
+
+
+
+
+</script>
+</body>
+
+</html>

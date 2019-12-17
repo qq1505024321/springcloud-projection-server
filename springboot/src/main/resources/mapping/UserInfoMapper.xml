@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.model.UserInfo" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="truename" property="truename" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="bir" property="bir" jdbcType="DATE" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="bloodtype" property="bloodtype" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="work" property="work" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="findUserById" resultMap="BaseResultMap">
+select tui.*,tu.username,tu.phone,tu.usertime,jf.integral,tcm.num from t_user_info as tui
+					left join t_user as tu on tui.userid = tu.userid
+						LEFT JOIN t_user_integral as jf on tui.userid = jf.userid LEFT JOIN t_credit_minute as tcm ON tui.userid=tcm.userid where tui.userid = #{userid}
+
+  </select>
+</mapper>

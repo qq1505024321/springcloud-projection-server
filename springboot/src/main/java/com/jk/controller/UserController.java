@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -30,5 +31,14 @@ public class UserController {
         request.getSession().setAttribute("user",userBean);
 
         return "success";
+    }
+    /**
+     * 查询房东名称，手机号，注册时间
+     */
+    @RequestMapping("queryUserF")
+    @ResponseBody
+    public Map<String,Object> queryUserF(Integer page,Integer limit,UserBean user){
+
+        return userService.queryUserF(page,limit,user);
     }
 }

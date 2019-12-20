@@ -5,6 +5,10 @@ import com.jk.model.UserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -17,5 +21,24 @@ public class UserServiceImpl implements UserService {
         String username = user.getUsername();
         String userpwd = user.getUserpwd();
         return userMapper.queryUserByUsernamePassword(username,userpwd);
+    }
+
+    @Override
+    public Map<String, Object> queryUserF(Integer page, Integer limit, UserBean user) {
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        int count=userMapper.queryUserFcount(user);
+
+        int start=(page-1)*limit;
+
+        List<UserBean> list=userMapper.queryUserF(start,limit,user);
+
+        map.put("count",count);
+        map.put("code",0);
+        map.put("msg","");
+        map.put("data",list);
+
+        return map;
     }
 }

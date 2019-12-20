@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>房源信息</title>
+</head>
+<!--引入layui的js、css-->
+<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+<script src="../layui/layui.all.js"></script>
+<!--引入jquery-->
+<script src="../layui/jquery.min.js"></script>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="houseadderss" placeholder="请输入地址" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" placeholder="请输入描述" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+    </div>
+</div>
+
+
+
+
+
+        <table class="layui-hide" id="housetable" layui-filter="test-table-totalRowText"></table>
+</body>
+<script>
+    layui.use(['table','jquery','layer'], function() {
+
+        var table = layui.table;
+
+        var $ = layui.jquery;
+
+        table.render({
+            elem: '#housetable'
+            , url: '../queryHouseInfo'
+            ,limit:10
+            ,limits:[10,20,30,40]
+            , cols: [
+                [
+                    {type: 'checkbox'},
+                    {field: 'hoseid', title: '房源编号', width: '10%', sort: true, totalRowText: true},
+                    {field: 'houseadderss', title: '地址', width: '20%', sort: true, totalRowText: true},
+                    {field: 'housenam', title: '所在小区', width: '10%', sort: true, totalRowText: true},
+                    {field: 'houseshow', title: '描述', width: '10%', sort: true, totalRowText: true},
+                    {field: 'dayprice', title: '价格/日', width: '7%', sort: true, totalRowText: true},
+                    {field: 'username', title: '房东名称', width: '10%', sort: true, totalRowText: true},
+                    {field: 'housetypes', title: '类型', width: '10%', sort: true, totalRowText: true},
+                    {field: 'bedtypename', title: '床类型', width: '8%', sort: true, totalRowText: true},
+                    {field: 'leasetypes', title: '出租方式', width: '10%', sort: true, totalRowText: true}
+                ]
+            ]
+            , page: true
+        })
+
+    });
+</script>
+</html>

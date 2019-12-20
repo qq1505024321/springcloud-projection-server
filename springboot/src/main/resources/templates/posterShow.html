@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>广告展示</title>
+    <title>Title</title>
+
+    <link href="../js/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="../js/bootStrap-addTabs/bootstrap.addtabs.css" rel="stylesheet">
+    <link href="../js/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet">
+    <link href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../js/bootstrap-dialog/dist/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="../js/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
+    <!--
+        <link rel="stylesheet" href="../js/uploadify/uploadify.css">
+    -->
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+    <script src="../js/bootStrap-addTabs/bootstrap.addtabs.js"></script>
+    <script src="../js/bootstrap-table/dist/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
+    <script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+    <script src="../js/bootstrap-bootbox/bootbox.js"></script>
+
+    <!--<script type="text/javascript" src="../js/uploadify/jquery.uploadify.min.js"></script>-->
+
+</head>
+<body>
+
+
+<div id="toolbar" class="container">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="company">公司名称</label>
+            <input type="text" id="company" class="form-control" placeholder="公司名称" />
+        </div>
+        <div class="form-group">
+            <label for="status">广告状态</label>
+            <select id="status" class="form-control" title="请选择">
+                <option value="">全部</option>
+                <option value="1">已续约</option>
+                <option value="2">已下架</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button onclick="queryAdvertising()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
+        </div>
+    </div>
+    <div></div>
+    <div>
+        <button onclick="addAdvertising()" class="btn btn-success glyphicon glyphicon-save">新增广告</button>
+    </div>
+
+</div>
+
+<table class="table" id="Advertising-table" border="1" ></table>
+</body>
+<script type="text/javascript">
+
+    $(function(){
+        queryAdvertising();
+    })
+
+
+    function queryAdvertising(){
+        $("#Advertising-table").bootstrapTable("refresh",{'pageNumber':1});
+        $("#Advertising-table").bootstrapTable({
+            url:"../queryAdvertising",
+            fitColumns:true,
+            striped: true,//隔行变色
+            showColumns:false,//是否显示 内容列下拉框
+            showPaginationSwitch:false,//是否显示 数据条数选择框
+            minimumCountColumns:2,//最小留几列 默认值1
+            showRefresh:false,//显示刷新按钮
+            showToggle:false,//显示切换视图
+            pagination:true,//开启分页
+            paginationLoop:true,//开启分页无限循环
+            pageNumber:1,//当前页数
+            pageSize:3,//每页条数
+            pageList:[3,5,8,10],//如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
+            sidePagination:"server",//
+            method:'post',//发送请求的方式
+            contentType:"application/x-www-form-urlencoded",
+            queryParams:function(obj){
+                // return 的数据 是传递到 控制层类中的参数
+                return {
+                    page:this.pageNumber,//当前页
+                    rows:this.pageSize, //每页条数
+
+                    company:$("#company").val(),
+                    status:$("#status").val(),
+                }
+            },
+            columns: [
+                {field: 'id',title: '序号', width: 150,align:'center'},
+                {field: 'company',title: '公司名', width: 150,align:'center'},
+                {field: 'imgname',title: '图片', width: 150,align:'center',
+                    formatter:function(value,row,index){
+                        return "<img src='"+value+"' width='150' height='50'>";
+                    }
+                },
+                {field: 'bgcolor',title: '背景色', width: 150,align:'center',
+                    formatter:function(value,row,index){
+                        if(value=="#76abba"){
+                            return "浅蓝色";
+                        }else if(value=="#ee89ec"){
+                            return "浅粉色";
+                        }else if(value=="#144074"){
+                            return "暗蓝色";
+                        }else{
+                            return "暗红色";
+                        }
+                    }
+                },
+                {field: 'imgurl',title: '跳转页面', width: 150,align:'center'},
+                {field: 'status',title: '广告状态', width: 150,align:'center',
+                    formatter:function(value,row,index){
+                        if(value==1){
+                            return "已续约";
+                        }else{
+                            return "已下架";
+                        }
+                    }
+                },
+                {field: 'caozuo',title: '操作',width: 100,align:'center',
+                    formatter:function(value,row,index){
+                        var sss="";
+                        if(row.status==1){
+                            sss="<button class='btn btn-link' onclick='updAdvertising(\""+ row.id +"\",2)'>下架</button>";
+                        }else{
+                            sss="<button class='btn btn-link' onclick='updAdvertising(\""+ row.id +"\",1)'>续约</button>";
+                        }
+                        return sss;
+                    }
+
+                }
+            ]
+        })
+    }
+
+    //新增弹框
+    function addAdvertising(){
+        bootbox.dialog({
+            title: "新增用户",
+            message:  $('<div></div>').load('../toposter'),
+            closeButton: true,
+            buttons: {
+                "success": {
+                    "label": "<i class='icon-ok'></i>保存",
+                    "className": "btn btn-success",
+                    "callback":function(){
+                        $.ajax({
+                            url: "../addAdvertising",
+                            type: "post",
+                            data: $("#addForm").serialize(),
+                            dataType: "json",
+                            success: function(data){
+                                $("#Advertising-table").bootstrapTable("refresh");
+                            }
+                        })
+
+                    }
+                },
+                "cancel": {
+                    "label": "<i class='icon-info'></i>取消",
+                    "className": "btn btn-warning",
+                    "callback":function(){}
+                }
+            }
+        })
+    }
+
+    // 上下架
+    function updAdvertising(id, status){
+        bootbox.confirm({
+            title: "提示",
+            size:'small',
+            message: "确认修改广告状态吗?",
+            buttons: {
+                confirm: {
+                    "label": "确认",
+                    "class": "btn-success",
+                },
+                cancel: {
+                    "label": "取消",
+                    "class": "btn-danger",
+                }
+            },
+            callback: function(result){
+                if(result){
+                    $.ajax({
+                        url: "../advertising/updAdvertising",
+                        type: "post",
+                        data: {"id":id,"status":status},
+                        dataType: "json",
+                        success:function(data){
+                            $("#Advertising-table").bootstrapTable("refresh");
+                        }
+                    })
+                }
+            }
+        })
+    }
+    var res;
+    function createAddAdvertising(url){
+        $.ajax({
+            url:url,
+            async:false,
+            success:function(data){
+                res = data;
+            }
+        });
+        return res;
+    }
+
+
+
+
+
+</script>
+</html>

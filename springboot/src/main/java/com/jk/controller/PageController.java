@@ -17,4 +17,22 @@ public class PageController {
 
         return "main";
     }
+
+    @RequestMapping("tohouse")
+    public String tohouse(){
+
+        return "house";
+    }
+
+    @RequestMapping("toposter")
+    public String toposter(){
+
+        return "poster";
+    }
+
+    @RequestMapping("toposterShow")
+    public String toposterShow(){
+
+        return "posterShow";
+    }
 }

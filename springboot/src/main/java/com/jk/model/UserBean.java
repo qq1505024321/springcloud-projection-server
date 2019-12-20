@@ -51,7 +51,7 @@ public class UserBean implements Serializable {
 
     private String endtime;
 
-    private Date usertime;
+
 
     public String getStarttime() {
         return starttime;
@@ -67,14 +67,6 @@ public class UserBean implements Serializable {
 
     public void setEndtime(String endtime) {
         this.endtime = endtime;
-    }
-
-    public Date getUsertime() {
-        return usertime;
-    }
-
-    public void setUsertime(Date usertime) {
-        this.usertime = usertime;
     }
 
     public Integer getUserid() {

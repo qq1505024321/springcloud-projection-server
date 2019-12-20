@@ -24,6 +24,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<String, Object> queryUserList(Integer page, Integer limit, UserBean user) {
+
+        Long total = userMapper.queryUserCount(user);
+
+        Integer start = (page-1)*limit;
+
+        List<UserBean> userBeanList = userMapper.queryUserList(start,limit,user);
+
+        HashMap<String,Object> map = new HashMap<String,Object>();
+
+        map.put("count",total);
+
+        map.put("msg","");
+
+        map.put("code",0);
+
+        map.put("data",userBeanList);
+
+        return map;
+    }
+
+    @Override
+    public Integer deleteUserById(Integer userid) {
+        return userMapper.deleteUserById(userid);
+    }
+
+    @Override
     public Map<String, Object> queryUserF(Integer page, Integer limit, UserBean user) {
 
         HashMap<String, Object> map = new HashMap<>();

@@ -11,4 +11,10 @@ public interface UserMapper {
     int queryUserFcount(@Param("user") UserBean user);
 
     List<UserBean> queryUserF(@Param("start") int start,@Param("limit") Integer limit,@Param("user") UserBean user);
+
+    Long queryUserCount(@Param("u") UserBean user);
+
+    List<UserBean> queryUserList(@Param("start") Integer start, @Param("limit") Integer limit, @Param("u") UserBean user);
+
+    Integer deleteUserById(@Param("userid") Integer userid);
 }

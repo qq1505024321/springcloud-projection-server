@@ -33,4 +33,9 @@ public class HouseServiceImpl implements HouseSevice{
 
         return map;
     }
+
+    @Override
+    public List<Houseinfo> queryHouseInfo1() {
+        return houseMapper.queryHouseInfo1();
+    }
 }

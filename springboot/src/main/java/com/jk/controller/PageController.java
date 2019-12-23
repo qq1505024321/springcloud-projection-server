@@ -35,4 +35,10 @@ public class PageController {
 
         return "posterShow";
     }
+
+    @RequestMapping("tohouseinfo")
+    public String tohouseinfo(){
+
+        return "houseinfo";
+    }
 }

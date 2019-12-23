@@ -10,24 +10,17 @@
     </select>
 
     <select id="queryUserF" resultType="com.jk.model.UserBean">
-        select * from t_user limit #{start},#{limit}
+        select * from t_user u
+        <include refid="searchSQL"></include>
+        limit #{start},#{limit}
     </select>
 
     <!--条件查询-->
     <sql id="searchSQL">
         <where>
-            <if test="u.username != null and u.username != '' ">
-                and username like '%${u.username}%'
+            <if test="user.username != null and user.username != '' ">
+                and u.username like '%${user.username}%'
             </if>
-            <if test="u.starttime != null and u.starttime != '' ">
-                and usertime &gt; #{u.starttime}
-            </if>
-
-            <if test="u.endtime != null and u.endtime != '' ">
-                and usertimr &lt; #{u.endtime}
-            </if>
-
-
         </where>
     </sql>
 

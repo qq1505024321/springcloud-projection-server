@@ -9,4 +9,7 @@ public interface HouseMapper {
     int queryHouseCount(@Param("houseinfo") Houseinfo houseinfo);
 
     List<Houseinfo> queryHouseInfo(@Param("start") int start,@Param("limit") Integer limit,@Param("houseinfo") Houseinfo houseinfo);
+
+    List<Houseinfo> queryHouseInfo1();
+
 }

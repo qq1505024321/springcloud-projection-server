@@ -11,65 +11,78 @@
 <script src="../layui/jquery.min.js"></script>
 
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">地址</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="houseadderss" placeholder="请输入地址" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">描述</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" placeholder="请输入描述" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
+
+<form class="layui-form" action="">
+    <div class="layui-col-md-offset7">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <input class="layui-input" name="houseadderss" id="name" autocomplete="off" placeholder="请输入地址或描述信息" style="width: 300px">
+            </div>
+            <div class="layui-inline">
+                <button type="button" class="layui-btn" data-type="reload" id="search" style="width: 75px">
+                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                </button>
             </div>
         </div>
-                <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
-                </div>
     </div>
-</div>
+</form>
 
 
-
-
+<button type="button" class="layui-btn" style="width: 75px">
+    <a id="export" href="../export" >导出</a>
+</button>
 
         <table class="layui-hide" id="housetable" layui-filter="test-table-totalRowText"></table>
 </body>
 <script>
-    layui.use(['table','jquery','layer'], function() {
 
-        var table = layui.table;
+        layui.use(['table','jquery','layer'], function() {
 
-        var $ = layui.jquery;
+            var table = layui.table;
 
-        table.render({
-            elem: '#housetable'
-            , url: '../queryHouseInfo'
-            ,limit:10
-            ,limits:[10,20,30,40]
-            , cols: [
-                [
-                    {type: 'checkbox'},
-                    {field: 'hoseid', title: '房源编号', width: '10%', sort: true, totalRowText: true},
-                    {field: 'houseadderss', title: '地址', width: '20%', sort: true, totalRowText: true},
-                    {field: 'housenam', title: '所在小区', width: '10%', sort: true, totalRowText: true},
-                    {field: 'houseshow', title: '描述', width: '10%', sort: true, totalRowText: true},
-                    {field: 'dayprice', title: '价格/日', width: '7%', sort: true, totalRowText: true},
-                    {field: 'username', title: '房东名称', width: '10%', sort: true, totalRowText: true},
-                    {field: 'housetypes', title: '类型', width: '10%', sort: true, totalRowText: true},
-                    {field: 'bedtypename', title: '床类型', width: '8%', sort: true, totalRowText: true},
-                    {field: 'leasetypes', title: '出租方式', width: '10%', sort: true, totalRowText: true}
+            var $ = layui.jquery;
+
+            table.render({
+                elem: '#housetable'
+                , url: '../queryHouseInfo'
+                ,limit:10
+                ,limits:[10,20,30,40]
+                , cols: [
+                    [
+                        {type: 'checkbox'},
+                        {field: 'hoseid', title: '房源编号', width: '10%', sort: true, totalRowText: true},
+                        {field: 'houseadderss', title: '地址', width: '20%', sort: true, totalRowText: true},
+                        {field: 'housenam', title: '所在小区', width: '10%', sort: true, totalRowText: true},
+                        {field: 'houseshow', title: '描述', width: '10%', sort: true, totalRowText: true},
+                        {field: 'dayprice', title: '价格/日', width: '7%', sort: true, totalRowText: true},
+                        {field: 'username', title: '房东名称', width: '10%', sort: true, totalRowText: true},
+                        {field: 'housetypes', title: '类型', width: '10%', sort: true, totalRowText: true},
+                        {field: 'bedtypename', title: '床类型', width: '8%', sort: true, totalRowText: true},
+                        {field: 'leasetypes', title: '出租方式', width: '10%', sort: true, totalRowText: true}
+                    ]
                 ]
-            ]
-            , page: true
+                , page: true,
+                id:'huoseinfoid'
+            })
+        active = {
+            reload: function () {
+                //执行重载
+                table.reload('huoseinfoid', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        houseadderss: $('#name').val(),//逗号隔开
+                    }
+                }, 'data');
+            }
+        };
+
+
+        $('#search').on('click', function () {
+
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
         })
 
     });

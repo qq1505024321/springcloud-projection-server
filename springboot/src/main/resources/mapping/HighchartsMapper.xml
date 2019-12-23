@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.HighcharsMapper" >
+
+
+    <select id="queryVisitorCount" resultType="com.jk.model.Visitor">
+      SELECT DATE_FORMAT(vdate,'%m') mon,COUNT(DATE_FORMAT(vdate,'%m')) amount FROM t_visitorvolume
+      WHERE DATE_FORMAT(vdate,'%Y')='2019'  GROUP BY DATE_FORMAT(vdate,'%m')
+    </select>
+
+    <select id="queryUserCount" resultType="com.jk.model.UserBean">
+     SELECT DATE_FORMAT(usertime,'%m') mon,COUNT(DATE_FORMAT(usertime,'%m')) amount FROM t_user
+      WHERE DATE_FORMAT(usertime,'%Y')='2019' GROUP BY DATE_FORMAT(usertime,'%m')
+    </select>
+
+    <select id="queryHouseCount" resultType="com.jk.model.Houseinfo">
+       SELECT DATE_FORMAT(createdate,'%m') mon,COUNT(DATE_FORMAT(createdate,'%m')) amount FROM t_houseinfo
+      where status = 1 and DATE_FORMAT(createdate,'%Y')='2019' GROUP BY DATE_FORMAT(createdate,'%m')
+    </select>
+
+    <select id="queryOrderCount" resultType="com.jk.model.BookingOrder_xc">
+       SELECT DATE_FORMAT(ordertime,'%m') mon,COUNT(DATE_FORMAT(ordertime,'%m')) amount FROM t_booking_order
+      where status = 1 and DATE_FORMAT(ordertime,'%Y')='2019' GROUP BY DATE_FORMAT(ordertime,'%m')
+    </select>
+
+
+
+
+
+
+
+
+</mapper>

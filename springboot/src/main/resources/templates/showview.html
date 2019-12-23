@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+
+    <!-- 这是jquery的核心包  -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../highcharts/code/highcharts.js"></script>
+    <script src="../highcharts/code/modules/exporting.js"></script>
+    <script src="../highcharts/code/modules/export-data.js"></script>
+    <script src="../highcharts/code/highcharts-3d.js"></script>
+
+  <!--  <script src="../highcharts/code/highcharts-zh_CN.js"></script>-->
+    <script src="../highcharts/code/modules/oldie.js"></script>
+    <script src="../highcharts/code/modules/cylinder.js"></script>
+    <script src="../highcharts/code/highcharts-more.js"></script>
+
+
+</head>
+
+<body>
+<div id="a">
+    <div id="container3"></div>
+    <div id="container4"></div>
+</div>
+<div id="container2"></div>
+<div id="container"></div>
+<div class="message"></div>
+
+
+</body>
+<script>
+
+
+
+    $(function () {
+        $.ajax({
+            url:"../queryHouseCount",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                //alert(res.length)
+                var arr = [];
+
+                for(var i=0; i<res.length;i++){
+                    var arr2 = [];
+                    arr2.push(res[i].mon) ;
+                    arr2.push(res[i].amount) ;
+                    arr.push(arr2);
+                }
+
+
+                var chart = Highcharts.chart('container3', {
+                    chart: {
+                        type: 'pie',
+                        options3d: {
+                            enabled: true,
+                            alpha: 45
+                        }
+                    },
+                    title: {
+                        text: '2019年度每月发布房间数量'
+                    },
+                    subtitle: {
+                        text: '小蜗出品'
+                    },
+                    plotOptions: {
+                        pie: {
+                            innerSize: 100,
+                            depth: 45
+                        }
+                    },
+                    series: [{
+                        name: '房间数量',
+                        data: arr
+                    }]
+                });
+
+
+
+            },error:function () {
+                alert("查询失败")
+            }
+        })
+    })
+
+
+   $(function () {
+        $.ajax({
+            url:"../queryOrderCount",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                //alert(res.length)
+                var arr = [];
+                var arr2 = [];
+                for(var i=0; i<res.length;i++){
+
+                    arr.push(res[i].mon) ;
+                    arr2.push(res[i].amount) ;
+
+                }
+                //alert(arr)
+
+                var chart = Highcharts.chart('container4', {
+                    chart: {
+                        type: 'areaspline'
+                    },
+                    title: {
+                        text: '2019年成交量'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        verticalAlign: 'top',
+                        x: 150,
+                        y: 100,
+                        floating: true,
+                        borderWidth: 1,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                    },
+                    xAxis: {
+                        categories: arr,
+                        plotBands: [{ // 标识出周末
+                            from: 4.5,
+                            to: 6.5,
+                            color: 'rgba(68, 170, 213, .2)'
+                        }]
+                    },
+                    yAxis: {
+                        title: {
+                            text: '订单量 万'
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: ' 万'
+                    },
+                    plotOptions: {
+                        areaspline: {
+                            fillOpacity: 1
+                        }
+                    },
+                    series: [{
+                        name: '订单数量',
+                        data: arr2
+                    }]
+                });
+
+
+            },error:function () {
+                alert("查询失败")
+            }
+        })
+    })
+
+
+    $(function () {
+        $.ajax({
+            url:"../queryUserCount",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                var arr = [];
+                for(var i=0; i<res.length;i++){
+                    arr.push(res[i].amount) ;
+                }
+                Highcharts.chart('container2', {
+                    chart: {
+                        type: 'cylinder',
+                        options3d: {
+                            enabled: true,
+                            alpha: 10,
+                            beta: 10,
+                            depth: 80,
+                            viewDistance: 30
+                        }
+                    },
+                    title: {
+                        text: '2019年度每月新增用户'
+                    },
+                    plotOptions: {
+                        series: {
+                            depth: 25,
+                            colorByPoint: true
+                        }
+                    },
+                    series: [{
+                        data: arr,
+                        name: 'Cylinders',
+                        showInLegend: false
+                    }]
+                });
+
+
+
+            },error:function () {
+                alert("查询失败")
+            }
+        })
+    })
+
+
+
+
+
+  $(function () {
+        $.ajax({
+            url:"../queryVisitorCount",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                var arr = [];
+                for(var i=0; i<res.length;i++){
+                   arr.push(res[i].amount) ;
+                }
+                    var chart = Highcharts.chart('container', {
+                        chart: {
+                            type: 'line'
+                        },
+                        title: {
+                            text: '小蜗 · 月访问量'
+                        },
+                        subtitle: {
+                            text: '数据来源: 小蜗后台管理'
+                        },
+                        xAxis: {
+                            categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                        },
+                        yAxis: {
+                            title: {
+                                text: '访问量 (万)'
+                            }
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    // 开启数据标签
+                                    enabled: true
+                                },
+                                // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+                                enableMouseTracking: false
+                            }
+                        },
+                        series: [{
+                            name: '访问量',
+                            data:arr
+                        }]
+                    });
+
+
+
+
+            },error:function () {
+                    alert("查询失败")
+            }
+        })
+    })
+
+
+</script>
+</html>

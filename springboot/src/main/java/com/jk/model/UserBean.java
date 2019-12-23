@@ -19,6 +19,9 @@ public class UserBean implements Serializable {
 
     private Integer userType;
 
+    private Integer amount;
+    private String mon;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date    usertime;
@@ -95,19 +98,35 @@ public class UserBean implements Serializable {
         this.userpwd = userpwd;
     }
 
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getMon() {
+        return mon;
+    }
+
+    public void setMon(String mon) {
+        this.mon = mon;
+    }
+
     @Override
     public String toString() {
         return "UserBean{" +
                 "userid=" + userid +
                 ", username='" + username + '\'' +
                 ", userpwd='" + userpwd + '\'' +
-                ", starttime='" + starttime + '\'' +
-                ", endtime='" + endtime + '\'' +
-                ", usertime=" + usertime +
-                ", userpwd='" + userpwd + '\'' +
                 ", phone='" + phone + '\'' +
                 ", userType=" + userType +
+                ", amount=" + amount +
+                ", mon='" + mon + '\'' +
                 ", usertime=" + usertime +
+                ", starttime='" + starttime + '\'' +
+                ", endtime='" + endtime + '\'' +
                 '}';
     }
 }

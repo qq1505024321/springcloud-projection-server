@@ -1,6 +1,7 @@
 package com.jk.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Houseinfo implements Serializable {
 
@@ -55,6 +56,12 @@ public class Houseinfo implements Serializable {
     private String  username;
 
     private String  leasetypes;
+
+    private Date createdate;
+    private Integer status;
+
+    private Integer amount;
+    private String mon;
 
     public String getBedtypename() {
         return bedtypename;
@@ -256,6 +263,38 @@ public class Houseinfo implements Serializable {
         this.similarproperties = similarproperties;
     }
 
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getMon() {
+        return mon;
+    }
+
+    public void setMon(String mon) {
+        this.mon = mon;
+    }
+
     @Override
     public String toString() {
         return "Houseinfo{" +
@@ -277,6 +316,17 @@ public class Houseinfo implements Serializable {
                 ", suitablenum=" + suitablenum +
                 ", commensalismtype=" + commensalismtype +
                 ", similarproperties=" + similarproperties +
+                ", bedtypename='" + bedtypename + '\'' +
+                ", housenam='" + housenam + '\'' +
+                ", housetypes='" + housetypes + '\'' +
+                ", dayprice=" + dayprice +
+                ", houseshow='" + houseshow + '\'' +
+                ", username='" + username + '\'' +
+                ", leasetypes='" + leasetypes + '\'' +
+                ", createdate=" + createdate +
+                ", status=" + status +
+                ", amount=" + amount +
+                ", mon='" + mon + '\'' +
                 '}';
     }
 }

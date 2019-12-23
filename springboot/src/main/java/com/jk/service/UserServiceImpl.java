@@ -1,6 +1,8 @@
 package com.jk.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jk.mapper.UserMapper;
+import com.jk.model.HouseInfo_xc;
 import com.jk.model.UserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer deleteUserById(Integer userid) {
         return userMapper.deleteUserById(userid);
+    }
+
+    @Override
+    public JSONObject findFangjianById(Integer page, Integer limit) {
+        long total = userMapper.findHouseTotal();
+        Integer start = (page-1)*limit;
+        List<HouseInfo_xc> usersList = userMapper.findFangjianById(start,limit);
+        JSONObject json = new JSONObject();
+        json.put("count",total);
+        json.put("data",usersList);
+        return json;
+    }
+
+    @Override
+    public void updateStatus(Integer num,Integer houseid) {
+        userMapper.updateStatus(num,houseid);
     }
 
     @Override

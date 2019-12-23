@@ -64,6 +64,7 @@ public class HighcharsController {
     @RequestMapping("queryOrderCount")
     @ResponseBody
     public List<BookingOrder_xc> queryOrderCount(){
+
         List<BookingOrder_xc> list = highcharsService.queryOrderCount();
        /* for (int i=0; i<list.size();i++){
             System.out.println(list.get(i)+"=======================list==");

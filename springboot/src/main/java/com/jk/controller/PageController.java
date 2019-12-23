@@ -41,4 +41,10 @@ public class PageController {
 
         return "houseinfo";
     }
+
+    @RequestMapping("toshenhe")
+    public String toshenhe(){
+
+        return "shenhe";
+    }
 }

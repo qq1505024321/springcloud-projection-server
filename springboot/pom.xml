@@ -39,6 +39,13 @@
             <version>3.10-beta2</version>
         </dependency>
 
+        <!--json-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.33</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- 加入POI核心依赖 -->
         <dependency>

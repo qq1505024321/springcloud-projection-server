@@ -37,7 +37,7 @@
                     ,{field: 'bednum', title: '床位个数', width:'5%', align: 'center'}
                     ,{field: 'dayprice', title: '日租', width:'10%', align: 'center'}
                     ,{field: 'username', title: '发布人名称', width:'5%', align: 'center'}
-                    ,{field: 'email', title: '发布人邮箱', width:'15%', align: 'center'}
+                    ,{field: 'emaila', title: '发布人邮箱', width:'15%', align: 'center'}
                     ,{field: 'status', title: '审核状态', width:'5%', align: 'center',
                             templet:function (rows) {
                                 if(rows.status == 1){
@@ -48,13 +48,15 @@
                             }
                     }
                     ,{field: 'act', title: '操作', width:'15%', align: 'center',
-                        templet:function (value) {
+                        templet:function (value,row,index) {
+                                console.log(value.emaila)
                                 if(value.status==1){
-                                    return "<button type='button' class='layui-btn layui-btn-sm' onclick='shenhe("+value.hoseid+",2)'>审核通过</button>";
+                                    return "<button type='button' class='layui-btn layui-btn-sm' onclick='shenhe("+value.hoseid+",2,\""+value.emaila+"\")'>审核通过</button>";
+                                    //return "<button type='button' class='layui-btn layui-btn-sm' onclick='youxiang("+value.email+")'>不过</button>";
                                 }else {
-                                    return "<button type='button' class='layui-btn layui-btn-sm' onclick='shenhe("+value.hoseid+",1)'>不通过</button>";
+                                    return "已审核";
                                 }
-                    }
+                        }
                 }
                 ]
             ]
@@ -65,17 +67,18 @@
 
     layui.use(['table','layer','jquery','form','laydate'],function () {
 
-        shenhe = function (houseid, num) {
+        shenhe = function (houseid, num,email) {
+
             $.ajax({
                 url: "../updateStatus",
                 type: "post",
                 data: {num: num, houseid: houseid},
                 success: function (data) {
-                    location.reload()
+
+                        location.href="../sendmail?emails="+email;
                 }
             })
         }
     })
-
 </script>
 </html>

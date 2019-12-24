@@ -62,7 +62,7 @@ public class HouseInfo_xc implements Serializable {
 
     private String username;
 
-    private String email;
+    private String emaila;
 
     public String getUsername() {
         return username;
@@ -72,12 +72,12 @@ public class HouseInfo_xc implements Serializable {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmaila() {
+        return emaila;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmaila(String emaila) {
+        this.emaila = emaila;
     }
 
     public String getLeasetypes() {

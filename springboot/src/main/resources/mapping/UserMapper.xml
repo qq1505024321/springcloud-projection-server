@@ -41,12 +41,21 @@
 
 
     <select id="findHouseTotal" resultType="long">
-    select count(*) from t_houseinfo
+    SELECT count(*) FROM
+        t_houseinfo a
+        LEFT JOIN t_house_leasetype b
+        ON a.leasetype = b.typeid
+        LEFT JOIN t_house_price c
+        on a.hoseid = c.houseid
+				LEFT JOIN t_user d
+				ON a.userid = d.userid
+				LEFT JOIN t_user_info e
+				ON d.userid = e.userid
   </select>
 
     <select id="findFangjianById" resultType="com.jk.model.HouseInfo_xc">
 
-      SELECT a.hoseid,a.houseadderss,a.roomnum,a.hallnum,a.bednum,b.leasetype as leasetypes,c.dayprice,d.username,e.email,a.`status`
+      SELECT a.hoseid,a.houseadderss,a.roomnum,a.hallnum,a.bednum,b.leasetype as leasetypes,c.dayprice,d.username,e.email as emaila,a.`status`
         FROM
         t_houseinfo a
         LEFT JOIN t_house_leasetype b

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class SkipController {
 
-
     @RequestMapping("toShowUser")
     public String toShowUser(){
         return "showUser";
     }
+
 }

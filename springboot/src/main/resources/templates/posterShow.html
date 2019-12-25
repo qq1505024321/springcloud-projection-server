@@ -45,7 +45,7 @@
             <label for="status">广告状态</label>
             <select id="status" class="form-control" title="请选择">
                 <option value="">全部</option>
-                <option value="1">已续约</option>
+                <option value="1">已上架</option>
                 <option value="2">已下架</option>
             </select>
         </div>
@@ -124,7 +124,7 @@
                 {field: 'status',title: '广告状态', width: 150,align:'center',
                     formatter:function(value,row,index){
                         if(value==1){
-                            return "已续约";
+                            return "已上架";
                         }else{
                             return "已下架";
                         }
@@ -136,7 +136,7 @@
                         if(row.status==1){
                             sss="<button class='btn btn-link' onclick='updAdvertising(\""+ row.id +"\",2)'>下架</button>";
                         }else{
-                            sss="<button class='btn btn-link' onclick='updAdvertising(\""+ row.id +"\",1)'>续约</button>";
+                            sss="<button class='btn btn-link' onclick='updAdvertising(\""+ row.id +"\",1)'>上架</button>";
                         }
                         return sss;
                     }
@@ -163,7 +163,7 @@
                             data: $("#addForm").serialize(),
                             dataType: "json",
                             success: function(data){
-                                $("#Advertising-table").bootstrapTable("refresh");
+                                queryAdvertising();
                             }
                         })
 
@@ -197,7 +197,7 @@
             callback: function(result){
                 if(result){
                     $.ajax({
-                        url: "../advertising/updAdvertising",
+                        url: "../updAdvertising",
                         type: "post",
                         data: {"id":id,"status":status},
                         dataType: "json",

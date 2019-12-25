@@ -29,16 +29,16 @@
             ,cols: [
                 [ //表头
                     {type:'checkbox'},
-                    {field: 'hoseid', title: '房间编号', width:'5%', align: 'center'}
-                    ,{field: 'houseadderss', title: '房源地址', width:'20%', align: 'center'}
-                    ,{field: 'roomnum', title: '房间个数', width:'5%', align: 'center'}
-                    ,{field: 'hallnum', title: '客厅个数', width:'5%', align: 'center'}
-                    ,{field: 'leasetypes', title: '出租类型', width:'10%', align: 'center'}
-                    ,{field: 'bednum', title: '床位个数', width:'5%', align: 'center'}
-                    ,{field: 'dayprice', title: '日租', width:'10%', align: 'center'}
-                    ,{field: 'username', title: '发布人名称', width:'5%', align: 'center'}
-                    ,{field: 'emaila', title: '发布人邮箱', width:'15%', align: 'center'}
-                    ,{field: 'status', title: '审核状态', width:'5%', align: 'center',
+                    {field: 'hoseid', title: '房间编号', width:'7%', align: 'center'}
+                    ,{field: 'houseadderss', title: '房源地址', width:'18%', align: 'center'}
+                    ,{field: 'roomnum', title: '房间个数', width:'7%', align: 'center'}
+                    ,{field: 'hallnum', title: '客厅个数', width:'7%', align: 'center'}
+                    ,{field: 'leasetypes', title: '出租类型', width:'7%', align: 'center'}
+                    ,{field: 'bednum', title: '床位个数', width:'7%', align: 'center'}
+                    ,{field: 'dayprice', title: '日租', width:'5%', align: 'center'}
+                    ,{field: 'username', title: '发布人名称', width:'8%', align: 'center'}
+                    ,{field: 'emaila', title: '发布人邮箱', width:'12%', align: 'center'}
+                    ,{field: 'status', title: '审核状态', width:'8%', align: 'center',
                             templet:function (rows) {
                                 if(rows.status == 1){
                                     return "未审核"
@@ -47,14 +47,14 @@
                                 }
                             }
                     }
-                    ,{field: 'act', title: '操作', width:'15%', align: 'center',
+                    ,{field: 'act', title: '操作', width:'8%', align: 'center',
                         templet:function (value,row,index) {
                                 console.log(value.emaila)
                                 if(value.status==1){
                                     return "<button type='button' class='layui-btn layui-btn-sm' onclick='shenhe("+value.hoseid+",2,\""+value.emaila+"\")'>审核通过</button>";
                                     //return "<button type='button' class='layui-btn layui-btn-sm' onclick='youxiang("+value.email+")'>不过</button>";
                                 }else {
-                                    return "已审核";
+                                    return "";
                                 }
                         }
                 }

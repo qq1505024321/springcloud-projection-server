@@ -22,8 +22,8 @@
             <span>后台系统</span>
         </div>
 
-         <div style="background: #ffff44">
-             <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="menu" lay-filter="layadmin-system-side-menu">
+         <div>
+             <ul style="background: white" class="layui-nav layui-nav-tree" lay-shrink="all" id="menu" lay-filter="layadmin-system-side-menu">
 
              </ul>
          </div>
@@ -94,20 +94,21 @@
                     nodes: data,
                     elem: '#menu', //绑定标签元素
                     data:data, //加载菜单数据
-                    click: function(node){
-                        console.log(node)
-                        var nodea = node.data;
-                        console.log(nodea)
-                        var exist=$("li[lay-id='"+nodea.id+"']").length;
+                    click: function(data){
+                        var node = data.data;
+                        var exist=$("li[lay-id='"+node.id+"']").length;
+
                         if (exist > 0) {//判断是否已经打开选项卡
-                            element.tabChange('tabs', nodea.id);// 切换到已有的选项卡
+                            element.tabChange('tabs', node.id);// 切换到已有的选项卡
                         } else {//如果没打开就新建一个选项卡
-                            element.tabAdd('tabs', {
-                                title: nodea.title,
-                                content:createIframe(nodea.href),
-                                id: nodea.id
-                            });
-                            element.tabChange('tabs', nodea.id);
+                            if (node.href != null && node.href != "") {
+                                element.tabAdd('tabs', {
+                                    title: node.title,
+                                    content:createIframe(node.href),
+                                    id: node.id
+                                });
+                                element.tabChange('tabs', node.id);
+                            }
                         }
                     }
 

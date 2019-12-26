@@ -2,9 +2,13 @@ package com.jk.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.jk.model.HouseInfo_xc_es;
 import com.jk.model.Houuser;
 import com.jk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -38,10 +42,15 @@ public class controller_xc {
         return json;
     }
 
+    @Autowired(required=true)
+    private ElasticsearchTemplate elasticsearchTemplate;
     @RequestMapping("updateStatus")
     @ResponseBody
     public Integer updateStatus(Integer num,Integer houseid){
         userService.updateStatus(num,houseid);
+        HouseInfo_xc_es e = userService.getHouseInfoByHouseid(houseid);
+        IndexQuery indexQuery = new IndexQueryBuilder().withId(Integer.toString(e.getHoseid())).withObject(e).build();
+        elasticsearchTemplate.index(indexQuery);
         return 1;
     }
 

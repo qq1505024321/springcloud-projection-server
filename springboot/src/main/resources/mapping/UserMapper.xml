@@ -73,4 +73,24 @@
     <update id="updateStatus">
         update t_houseinfo set status = #{num} where hoseid = #{houseid}
     </update>
+
+    <select id="getHouseInfoByHouseid" resultType="com.jk.model.HouseInfo_xc_es">
+
+    SELECT hinfo.*,house.housetitle housenam,house.adorn houseshow,thp.dayprice,tu.username,tht.` housetype` housetypes,tbt.bedtypename,thl.leasetype leasetypes,
+        tui.img,thi.ketingimgurl,thi.chufangimgurl,thi.qitaimgurl,thi.woshiimgurl,thi.wsjimgurl
+        FROM	t_houseinfo hinfo
+        left JOIN t_housedescribe house ON hinfo.hoseid=house.houseid
+				LEFT join t_house_type tht ON hinfo.housetypeid=tht.` housetypeid`
+				LEFT JOIN t_bed_type tbt ON hinfo.bedtypeid=tbt.bedtypeid
+				LEFT JOIN t_house_leasetype thl ON thl.typeid=hinfo.leasetype
+
+        LEFT join t_house_price thp ON hinfo.hoseid = thp.houseid
+
+        LEFT JOIN t_house_img thi ON thi.houseid=hinfo.hoseid
+        left join t_user tu ON tu.userid=hinfo.userid
+        left JOIN t_user_info tui ON tui.userid=tu.userid
+
+				where hinfo.hoseid = #{houseid}
+
+  </select>
 </mapper>

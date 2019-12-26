@@ -3,6 +3,7 @@ package com.jk.service;
 import com.alibaba.fastjson.JSONObject;
 import com.jk.mapper.UserMapper;
 import com.jk.model.HouseInfo_xc;
+import com.jk.model.HouseInfo_xc_es;
 import com.jk.model.UserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateStatus(Integer num,Integer houseid) {
         userMapper.updateStatus(num,houseid);
+    }
+
+    @Override
+    public HouseInfo_xc_es getHouseInfoByHouseid(Integer houseid) {
+        return userMapper.getHouseInfoByHouseid(houseid);
     }
 
     @Override

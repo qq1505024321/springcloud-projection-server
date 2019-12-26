@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jk.model.HouseInfo_xc_es;
 import com.jk.model.UserBean;
 
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface UserService {
     JSONObject findFangjianById(Integer page, Integer limit);
 
     void updateStatus(Integer num,Integer houseid);
+
+    HouseInfo_xc_es getHouseInfoByHouseid(Integer houseid);
 }

@@ -1,6 +1,7 @@
 package com.jk.mapper;
 
 import com.jk.model.HouseInfo_xc;
+import com.jk.model.HouseInfo_xc_es;
 import com.jk.model.UserBean;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +25,6 @@ public interface UserMapper {
     List<HouseInfo_xc> findFangjianById(@Param("start") Integer start,@Param("rows")  Integer limit);
 
     void updateStatus(@Param("num") Integer num,@Param("houseid") Integer houseid);
+
+    HouseInfo_xc_es getHouseInfoByHouseid(@Param("houseid") Integer houseid);
 }
